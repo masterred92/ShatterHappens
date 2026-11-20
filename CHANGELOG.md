@@ -5,6 +5,7 @@
 - Layout fixes (FrostSuite-1.0 r4, shared by the suite): a status too long to sit beside the title moves to its own line instead of running into it, and box heights fit their text.
 - The Reset button sits below all text (102 px before any fight, 116 px after one).
 - TOC icon is now Fingers of Frost (`Ability_Mage_WintersGrasp`, 236227), the same icon as the box.
+- Low-level Mages (FrostSuite-1.0 r5, shared by the suite): until you have Ice Lance the box shows one calm line, e.g. `Learn Ice Lance at level 20`, with a small **Hide until I learn** button (saved per character). It steps aside in combat and comes back by itself as soon as you learn it (checked when you learn a spell, level up, change talents or leave combat). Fights before Ice Lance aren't counted, and the Reset button only shows once it is known.
 
 ## 1.0.0 (Nov 20, 2026)
 

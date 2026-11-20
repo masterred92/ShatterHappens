@@ -181,6 +181,7 @@ end
 
 -- ---------- fights ----------
 function SH.StartFight()
+  SH.fightStarted = SH.known
   if not SH.known then SH.Paint(); return end -- no Ice Lance yet: no ledger, no empty fights in the session
   SH.fight = newCounts()
   SH.EvaluateModes()
@@ -191,7 +192,9 @@ function SH.StartFight()
 end
 
 function SH.EndFight()
-  if not SH.known then SH.Paint(); return nil end
+  local started = SH.fightStarted
+  SH.fightStarted = nil
+  if not (SH.known and started) then SH.Paint(); return nil end -- only fights that started with Ice Lance known
   local f = SH.fight
   local m = SH.ReadMeter()
   local res = { counts = f, metered = m ~= nil, split = m and m.split, total = m and m.total, lance = m and m.split and m.lance or nil }
@@ -314,18 +317,25 @@ ev:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
 ev:RegisterUnitEvent("UNIT_AURA", "player", "target")
 
 SH.known = true
+-- Spellbook re-read out of combat only; PLAYER_REGEN_ENABLED re-reads it, so a change skipped in combat is picked up.
+function SH.CheckKnown()
+  if C.InCombat() then return SH.known end
+  SH.need = FS.IsMage() and FS.Missing(SH.NEEDS) or nil
+  SH.known = FS.IsMage() and SH.need == nil
+  if SH.known then FS.Learned(KEY) end
+  return SH.known
+end
 local function refresh()
-  if not C.InCombat() then
-    SH.need = FS.IsMage() and FS.Missing(SH.NEEDS) or nil
-    SH.known = FS.IsMage() and SH.need == nil
-    if SH.known then FS.Learned(KEY) end
-  end
+  SH.CheckKnown()
   SH.EvaluateModes(); SH.Paint()
 end
 local handlers = {
   PLAYER_LOGIN = refresh, SPELLS_CHANGED = refresh,
   PLAYER_REGEN_DISABLED = SH.StartFight,
-  PLAYER_REGEN_ENABLED = function() C_Timer.After(1, function() Core.SafeCall("endFight", SH.EndFight) end) end,
+  PLAYER_REGEN_ENABLED = function()
+    SH.CheckKnown() -- EndFight paints in 1 s
+    C_Timer.After(1, function() Core.SafeCall("endFight", SH.EndFight) end)
+  end,
   PLAYER_TARGET_CHANGED = function() SH.EvaluateModes() end,
   UNIT_AURA = function(unit)
     if unit == "player" then SH.ScanFingers(); SH.Paint()
