@@ -28,6 +28,7 @@ ns.Core.AddLocale("enUS", {
   ["client"] = true,
   ["counting procs only"] = true,
   ["counting procs only (the meter has no Ice Lance line)"] = true,
+  ["expired"] = true,
   ["fights"] = true,
   ["gained"] = true,
   ["in window"] = true,

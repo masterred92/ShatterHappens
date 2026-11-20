@@ -6,7 +6,7 @@
 ## SavedVariables: KennyShatterHappensDB
 ## OptionalDeps: ShatterPulse, MageProcs, Shadowflare
 ## X-License: MIT
-## IconTexture: Interface\Icons\Ability_Mage_WintersGrasp
+## IconTexture: Interface\Icons\Spell_Frost_FrostShock
 ## X-Category: Combat
 ## X-Website: https://github.com/masterred92/ShatterHappens
 

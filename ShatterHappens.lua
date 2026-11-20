@@ -219,7 +219,8 @@ local function pct(a, b) return (b and b > 0) and ("%d%%"):format(math.floor(a /
 function SH.Lines()
   local f = SH.fight
   local fingers = SH.modes.fingers == "none" and L["Fingers hidden"]
-    or ((SH.modes.fingers == "alert" and L["alerts"] or L["gained"]) .. " " .. f.gained .. " · " .. L["spent"] .. " " .. f.spent)
+    or ((SH.modes.fingers == "alert" and L["alerts"] or L["gained"]) .. " " .. f.gained .. " · " .. L["spent"] .. " " .. f.spent
+      .. (SH.modes.fingers == "aura" and (" · " .. L["expired"] .. " " .. f.expired) or "")) -- expiry is only seen on the buff itself
   local lances = ("%d %s · %d %s"):format(f.inside, L["in window"], f.outside, L["out"]) .. (f.unknown > 0 and (" · %d ?"):format(f.unknown) or "")
   return "|cffffd100" .. L["Fingers:"] .. "|r " .. fingers, "|cffffd100" .. L["Lances:"] .. "|r " .. lances
 end
