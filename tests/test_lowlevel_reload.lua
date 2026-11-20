@@ -1,4 +1,4 @@
--- ShatterHappens: /reload with "Hide until I learn" already saved (FrostSuite r5). The saved choice is honoured on load, another
+-- ShatterHappens: /reload with "Hide until I learn" already saved (FrostSuite r5+). The saved choice is honoured on load, another
 -- character's choice is not, and the box comes back by itself once the spell is learned.
 package.path = "tests/?.lua;" .. package.path
 local W = require("mock_wow"); W.install()

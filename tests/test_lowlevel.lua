@@ -1,4 +1,4 @@
--- ShatterHappens: low-level characters (FrostSuite r5). A level 1 Mage (Fireball, Frost Armor), a mid-level Mage with only some
+-- ShatterHappens: low-level characters (FrostSuite r5+). A level 1 Mage (Fireball, Frost Armor), a mid-level Mage with only some
 -- spells, and a non-Mage: loads quietly, never shows made-up data, says when to learn what it needs, "Hide until I learn"
 -- is saved per character, and the box comes back by itself (no hand-cleared flags) on each event: SPELLS_CHANGED alone,
 -- LEARNED_SPELL_IN_SKILL_LINE alone, PLAYER_LEVEL_UP alone, and PLAYER_REGEN_ENABLED after a change skipped in combat.
