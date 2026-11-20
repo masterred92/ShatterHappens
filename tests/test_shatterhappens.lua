@@ -20,6 +20,9 @@ local function fight() W.combat = true; W.fire("PLAYER_REGEN_DISABLED") end
 local function endFight() W.combat = false; W.fire("PLAYER_REGEN_ENABLED"); W.advance(1.1) end
 
 check(row.headText == "No fights yet." and SH.reset.shown, "idle: No fights yet + Reset button")
+-- r4 layout: Reset (18 px at y +7, top edge 25 px above the bottom) sits under all text.
+local function resetClear(lines) return 44 + 14 * lines <= row.h - 25 end
+check(row.h == 102 and row.lineWrap[1] and resetClear(2), "no fights: wrapped hint (2 lines) clears Reset, box 102")
 
 -- 1. Strict client (auras secret in combat, alert available): alert windows, Lances in/out.
 reset(); fight()
@@ -38,6 +41,7 @@ W.meter = { total = 10000, rows = { { 116, 6000 }, { LANCE, 4000 } } }
 endFight()
 check(SH.lastFight and SH.lastFight.split and SH.lastFight.lance == 4000, "after combat: Ice Lance from the meter")
 check(row.lineText[3]:find("40%%") and row.lineText[3]:find("avg 1333"), "share 40% and avg per Lance")
+check(row.h == 116 and resetClear(3) and row.lines[3].shown, "after a fight: 3 ledger lines clear Reset, box 116")
 check(SH.reset.shown and KennyShatterHappensDB.session.fights == 1, "Reset back after combat, session counts the fight")
 
 -- 2. Meter without an Ice Lance line: counting procs only. Secret meter: nil + 'secret'.

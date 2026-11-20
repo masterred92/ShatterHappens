@@ -240,7 +240,7 @@ function SH.Paint()
   local r = SH.lastFight
   if not r then
     FS.Headline(KEY, L["No fights yet."], "Mist")
-    FS.Line(KEY, 1, L["Use Frost spells and your Fingers of Frost show up here."])
+    FS.Line(KEY, 1, L["Use Frost spells and your Fingers of Frost show up here."], true) -- may wrap: takes lines 1-2
   else
     FS.Headline(KEY, L["last fight"], "ShardLilac")
     FS.Line(KEY, 1, fl); FS.Line(KEY, 2, ll)
@@ -255,6 +255,12 @@ function SH.Paint()
   FS.Status(KEY, ("%s %d"):format(L["fights"], s.fights), "Mist")
   FS.State(KEY, "idle")
 end
+
+-- Box heights (FrostSuite r4): in combat 2 ledger lines, plus a line for the "counting procs only" status, which is too long
+-- to sit beside the title. Out of combat the Reset button sits under all text: 2 lines (the wrapped "No fights yet" hint)
+-- or 3 (last fight) + Reset.
+function SH.Height() return FS.BodyHeight(SH.modes.fingers == "none" and 3 or 2) end
+function SH.IdleHeight() return FS.BodyHeight(SH.lastFight and 3 or 2, true) end
 
 function SH.MeterLines()
   local m, why = SH.ReadMeter()
@@ -332,7 +338,8 @@ ev:SetScript("OnEvent", function(_, event, ...)
     db.settings = db.settings or {}
     KennyShatterHappensDB = db
     settings = Core.Settings(db.settings, SH.DEFAULTS)
-    row = FS.Register(KEY, db, { title = L["Shatter Happens"], slash = SH.Slash, help = "meter | pulse auto|on|off | reset | debug", debug = Core.PrintDebug })
+    row = FS.Register(KEY, db, { title = L["Shatter Happens"], slash = SH.Slash, help = "meter | pulse auto|on|off | reset | debug", debug = Core.PrintDebug,
+      height = SH.Height, idleHeight = SH.IdleHeight })
     local b = CreateFrame("Button", nil, row, "UIPanelButtonTemplate")
     b:SetSize(96, 18)
     b:SetPoint("BOTTOMLEFT", 8, 7)
