@@ -31,6 +31,8 @@ SH.LANCE = { [1312002] = 1, [400640] = 2, [1240044] = 3, [1240045] = 4, [1240046
 SH.FINGERS = 400669
 SH.FROZEN = { 122, 865, 6131, 10230, 12494 }
 SH.OVERLAY_ADDONS = { "ShatterPulse", "MageProcs", "Shadowflare" }
+-- Ice Lance: SpellLevels.BaseLevel 20 (spell 1312002), build 1.60.1.71037.
+SH.NEEDS = { { name = L["Ice Lance"], level = 20, spells = SH.LANCE } }
 SH.DEFAULTS = { overlay = "auto" } -- auto = on unless one of SH.OVERLAY_ADDONS is loaded
 
 local db, settings, row
@@ -179,6 +181,7 @@ end
 
 -- ---------- fights ----------
 function SH.StartFight()
+  if not SH.known then SH.Paint(); return end -- no Ice Lance yet: no ledger, no empty fights in the session
   SH.fight = newCounts()
   SH.EvaluateModes()
   fofState = nil
@@ -188,6 +191,7 @@ function SH.StartFight()
 end
 
 function SH.EndFight()
+  if not SH.known then SH.Paint(); return nil end
   local f = SH.fight
   local m = SH.ReadMeter()
   local res = { counts = f, metered = m ~= nil, split = m and m.split, total = m and m.total, lance = m and m.split and m.lance or nil }
@@ -227,7 +231,11 @@ end
 
 function SH.Paint()
   if not row then return end
-  if not SH.known then FS.State(KEY, "hidden"); return end
+  if SH.reset then SH.reset:SetShown(SH.known and not C.InCombat()) end -- never over the "Hide until I learn" button
+  if not SH.known then
+    if SH.need then FS.NotYet(KEY, SH.need) else FS.State(KEY, "hidden") end
+    return
+  end
   FS.ClearLines(KEY)
   local fl, ll = SH.Lines()
   if C.InCombat() then
@@ -307,7 +315,11 @@ ev:RegisterUnitEvent("UNIT_AURA", "player", "target")
 
 SH.known = true
 local function refresh()
-  if not C.InCombat() then SH.known = FS.IsMage() and FS.KnowsAny(SH.LANCE) ~= false end
+  if not C.InCombat() then
+    SH.need = FS.IsMage() and FS.Missing(SH.NEEDS) or nil
+    SH.known = FS.IsMage() and SH.need == nil
+    if SH.known then FS.Learned(KEY) end
+  end
   SH.EvaluateModes(); SH.Paint()
 end
 local handlers = {
@@ -339,7 +351,7 @@ ev:SetScript("OnEvent", function(_, event, ...)
     KennyShatterHappensDB = db
     settings = Core.Settings(db.settings, SH.DEFAULTS)
     row = FS.Register(KEY, db, { title = L["Shatter Happens"], slash = SH.Slash, help = "meter | pulse auto|on|off | reset | debug", debug = Core.PrintDebug,
-      height = SH.Height, idleHeight = SH.IdleHeight })
+      height = SH.Height, idleHeight = SH.IdleHeight, refresh = refresh })
     local b = CreateFrame("Button", nil, row, "UIPanelButtonTemplate")
     b:SetSize(96, 18)
     b:SetPoint("BOTTOMLEFT", 8, 7)
