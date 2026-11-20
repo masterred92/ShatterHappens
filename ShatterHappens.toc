@@ -9,6 +9,8 @@
 ## IconTexture: Interface\Icons\Spell_Frost_FrostShock
 ## X-Category: Combat
 ## X-Website: https://github.com/masterred92/ShatterHappens
+## X-Curse-Project-ID: 1819376
+## X-Wago-ID: XKqEJdKy
 
 Libs\KennyShared\Compat.lua
 Libs\KennyShared\Core.lua
