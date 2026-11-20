@@ -1,0 +1,18 @@
+## Interface: 16001
+## Title: Shatter Happens
+## Notes: Frost Mage ledger: Fingers of Frost gained vs spent and Ice Lances inside vs outside a Frozen / Fingers window, then Ice Lance's share from the game's own damage meter after combat. Part of the Frost Suite; works alone.
+## Author: Kenny
+## Version: 1.0.0
+## SavedVariables: KennyShatterHappensDB
+## OptionalDeps: ShatterPulse, MageProcs, Shadowflare
+## X-License: MIT
+## IconTexture: Interface\Icons\Ability_Mage_WintersGrasp
+## X-Category: Combat
+## X-Website: https://github.com/masterred92/ShatterHappens
+
+Libs\KennyShared\Compat.lua
+Libs\KennyShared\Core.lua
+Libs\KennyShared\Hub.lua
+Libs\FrostSuite\FrostSuite.lua
+Locales\enUS.lua
+ShatterHappens.lua
