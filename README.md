@@ -1,6 +1,6 @@
 # Shatter Happens
 
-A Fingers of Frost and Ice Lance ledger for Frost Mages on **WoW: Forever** (Interface 16001). Version 1.0.0. Part of Kenny's
+A Fingers of Frost and Ice Lance ledger for Frost Mages on **WoW: Forever** (Interface 16001). Version 1.0.1. Part of Kenny's
 Frost Suite, and it works alone.
 
 ShatterPulse, MageProcs and Shadowflare already flash Fingers of Frost and Frozen targets. This keeps the ledger they don't, per

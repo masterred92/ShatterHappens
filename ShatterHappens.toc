@@ -2,7 +2,7 @@
 ## Title: Shatter Happens
 ## Notes: Frost Mage ledger: Fingers of Frost gained vs spent and Ice Lances inside vs outside a Frozen / Fingers window, then Ice Lance's share from the game's own damage meter after combat. Part of the Frost Suite; works alone.
 ## Author: Kenny
-## Version: 1.0.0
+## Version: 1.0.1
 ## SavedVariables: KennyShatterHappensDB
 ## OptionalDeps: ShatterPulse, MageProcs, Shadowflare
 ## X-License: MIT
