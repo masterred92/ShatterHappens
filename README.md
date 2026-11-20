@@ -42,7 +42,7 @@ The Frost Suite has no per-addon slash commands, only `/frost <sub>`. That keeps
 
 ## Checks
 
-`tests/run.sh <wow-ui-source>`, `tools/verify_unit_events.py <wow-ui-source>`, `tools/check_suite_lib.sh`, `tools/verify_media.sh`.
+`tests/run.sh <wow-ui-source>`, `tools/verify_unit_events.py <wow-ui-source>`, `tools/check_suite_lib.sh <frost-suite-lib folder>`, `tools/verify_media.sh`.
 Spell IDs come from the game's data tables for build 1.60.1.70862.
 
 MIT licence. Uses the game's own textures only, and casts, targets or moves nothing.
